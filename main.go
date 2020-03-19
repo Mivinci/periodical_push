@@ -36,7 +36,7 @@ func (h *Hit) Commit() (err error) {
 
 // Push .
 func (h *Hit) Push(remote string) (err error) {
-	if remote != "" {
+	if remote == "" {
 		remote = "origin master"
 	}
 	if err = exec.Command("git", "push", remote).Run(); err != nil {
