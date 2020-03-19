@@ -52,7 +52,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	for t := range time.NewTicker(10 * time.Second).C {
+	for t := range time.NewTicker(20 * time.Second).C {
 		if _, err := f.WriteString(fmt.Sprintf("%s\n", t.String())); err != nil {
 			log.Printf("append to file(%s) error(%v)", filename, err)
 		}
