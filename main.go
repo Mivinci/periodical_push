@@ -58,5 +58,6 @@ func main() {
 		}
 		hit.AddAll()
 		hit.Commit()
+		hit.Push("")
 	}
 }
