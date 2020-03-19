@@ -1,2 +1,3 @@
-# periodical_push
-Help me turn green.
+# Periodical Push
+
+This helps me turn green.
