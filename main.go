@@ -38,7 +38,8 @@ func periodicTask() {
 func init() {
 	f, _ := os.OpenFile("error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	log.SetOutput(f)
-	log.Printf("Start periodic task")
+	log.Println("Start periodic task")
+	fmt.Println("Start periodic task.\nThe next `git push` will be executed in 12 hours.")
 
 	flag.StringVar(&script, "f", "", "script file")
 	flag.IntVar(&t, "t", 12, "Period of the task execution")
