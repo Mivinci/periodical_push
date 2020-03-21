@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"os/exec"
@@ -13,7 +12,7 @@ import (
 )
 
 var (
-	f      io.Writer
+	f      os.File
 	t      int
 	script string
 )
@@ -28,7 +27,7 @@ func main() {
 }
 
 func periodicTask() {
-	for t := range time.NewTicker(time.Duration(t) * time.Second).C {
+	for t := range time.NewTicker(time.Duration(t) * time.Hour).C {
 		err := exec.Command(fmt.Sprintf("./%s", script)).Run()
 		if err != nil {
 			log.Println(err, t)
@@ -39,6 +38,7 @@ func periodicTask() {
 func init() {
 	f, _ := os.OpenFile("error.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	log.SetOutput(f)
+	log.Printf("Start periodic task")
 
 	flag.StringVar(&script, "f", "", "script file")
 	flag.IntVar(&t, "t", 12, "Period of the task execution")
@@ -52,6 +52,7 @@ func shutdown() {
 		fmt.Println("Shutdown safely")
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGSTOP:
+			f.Close()
 			log.Printf("Got a signal %s", s.String())
 			return
 		case syscall.SIGHUP:
